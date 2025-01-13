@@ -2,13 +2,12 @@ import torch
 import numpy as np
 from tqdm import tqdm
 import utils3d
-from PIL import Image
 
 from ..renderers import OctreeRenderer, GaussianRenderer, MeshRenderer
 from ..representations import Octree, Gaussian, MeshExtractResult
-from ..modules import sparse as sp
 from .random_utils import sphere_hammersley_sequence
 
+from comfy.utils import ProgressBar
 
 def yaw_pitch_r_fov_to_extrinsics_intrinsics(yaws, pitchs, rs, fovs):
     is_list = isinstance(yaws, list)
@@ -68,6 +67,7 @@ def render_frames(sample, extrinsics, intrinsics, options={}, colors_overwrite=N
         raise ValueError(f'Unsupported sample type: {type(sample)}')
     
     rets = {}
+    comfy_pbar = ProgressBar(len(extrinsics))
     for j, (extr, intr) in tqdm(enumerate(zip(extrinsics, intrinsics)), desc='Rendering', disable=not verbose):
         if not isinstance(sample, MeshExtractResult):
             res = renderer.render(sample, extr, intr, colors_overwrite=colors_overwrite)
@@ -84,6 +84,7 @@ def render_frames(sample, extrinsics, intrinsics, options={}, colors_overwrite=N
             res = renderer.render(sample, extr, intr)
             if 'normal' not in rets: rets['normal'] = []
             rets['normal'].append(np.clip(res['normal'].detach().cpu().numpy().transpose(1, 2, 0) * 255, 0, 255).astype(np.uint8))
+        comfy_pbar.update(1)
     return rets
 
 

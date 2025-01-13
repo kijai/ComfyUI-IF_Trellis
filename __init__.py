@@ -45,15 +45,23 @@ except Exception as e:
 
 try:
     from IF_TrellisCheckpointLoader import IF_TrellisCheckpointLoader
-    from IF_Trellis import IF_TrellisImageTo3D
+    from IF_Trellis import IF_TrellisImageTo3D, IF_TrellisImageTo3D_v2, IF_TrellisRenderVideo, IF_TrellisRenderMultiview, IF_TrellisRenderGLB
     NODE_CLASS_MAPPINGS = {
         "IF_TrellisCheckpointLoader": IF_TrellisCheckpointLoader,
         "IF_TrellisImageTo3D": IF_TrellisImageTo3D,
+        "IF_TrellisImageTo3D_v2": IF_TrellisImageTo3D_v2,
+        "IF_TrellisRenderVideo": IF_TrellisRenderVideo,
+        "IF_TrellisRenderMultiview": IF_TrellisRenderMultiview,
+        "IF_TrellisRenderGLB": IF_TrellisRenderGLB
     }
 
     NODE_DISPLAY_NAME_MAPPINGS = {
         "IF_TrellisCheckpointLoader": "Trellis Model Loader 💾",
         "IF_TrellisImageTo3D": "Trellis Image to 3D 🖼️➡️🎲",
+        "IF_TrellisImageTo3D_v2": "Trellis Image to 3D v2 🖼️➡️🎲",
+        "IF_TrellisRenderVideo": "Trellis Render Video 🎲➡️🎥",
+        "IF_TrellisRenderMultiview": "Trellis Render Multiview 🎲➡️🖼️",
+        "IF_TrellisRenderGLB": "Trellis Render GLB 🎲➡️📦"
     }
 
 except Exception as e:
